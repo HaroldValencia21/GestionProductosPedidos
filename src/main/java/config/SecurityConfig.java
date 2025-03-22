@@ -2,6 +2,7 @@ package com.productosypedidos.gestion_productos_pedidos.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
@@ -15,6 +16,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity  // Habilita la seguridad a nivel de método
 public class SecurityConfig {
 
     @Bean
@@ -22,8 +24,8 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/productos").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/productos/**").hasRole("ADMIN")
+                        // Simplificamos y dejamos que las anotaciones @PreAuthorize se encarguen
+                        .requestMatchers("/productos", "/productos/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
