@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class GestionProductosPedidosApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(GestionProductosPedidosApplication.class, args);
+		SpringApplication.run(GestionProductosPedidosApplication.class, args );
 	}
 }
 

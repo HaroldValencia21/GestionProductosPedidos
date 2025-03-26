@@ -33,7 +33,7 @@ public class ProductoControllerIntegrationTest {
     }
 
     @Test
-    @WithMockUser(username = "admin", roles = {"Admin"}) // Añade autenticación simulada
+    @WithMockUser(username = "testuser", roles = {"Admin"}) // Añade autenticación simulada
     void testAgregarProducto() throws Exception {
         // Crear un nuevo producto
         Producto nuevoProducto = new Producto(99, "Producto de Prueba", 150.0);
