@@ -2,30 +2,32 @@ package com.productosypedidos.gestion_productos_pedidos.controller;
 
 import com.productosypedidos.gestion_productos_pedidos.model.Producto;
 import com.productosypedidos.gestion_productos_pedidos.service.ProductoService;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/productos")
+@RequestMapping("/api/productos")
 public class ProductoController {
+
     private final ProductoService productoService;
 
+    @Autowired
     public ProductoController(ProductoService productoService) {
         this.productoService = productoService;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping
-    public String agregarProducto(@RequestBody Producto producto) {
-        productoService.agregarProducto(producto);
-        return "Producto agregado";
+    @GetMapping
+    public ResponseEntity<List<Producto>> obtenerProductos() {
+        List<Producto> productos = productoService.obtenerProductos();
+        return ResponseEntity.ok(productos);
     }
 
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    @GetMapping
-    public List<Producto> listarProductos() {
-        return productoService.obtenerProductos();
+    @PostMapping
+    public ResponseEntity<Producto> agregarProducto(@RequestBody Producto producto) {
+        productoService.agregarProducto(producto);
+        return ResponseEntity.ok(producto);
     }
 }
